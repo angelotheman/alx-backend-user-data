@@ -42,10 +42,16 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
+        """
+        Initialiazation methods
+        """
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
+        """
+        Format method
+        """
         original_message = super().format(record)
         filtered_message = filter_datum(
                 self.fields, self.REDACTION,
