@@ -3,6 +3,7 @@
 Module to demonstrate user data and logging
 """
 import re
+import logging
 from typing import List
 
 
@@ -30,3 +31,26 @@ def filter_datum(
     result = re.sub(combined_pattern, substitute, message)
 
     return result
+
+
+class RedactingFormatter(logging.Formatter):
+    """ Redacting Formatter class
+        """
+
+    REDACTION = "***"
+    FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
+    SEPARATOR = ";"
+
+    def __init__(self, fields: List[str]):
+        super(RedactingFormatter, self).__init__(self.FORMAT)
+        self.fields = fields
+
+    def format(self, record: logging.LogRecord) -> str:
+        original_message = super().format(record)
+        filtered_message = filter_datum(
+                self.fields, self.REDACTION,
+                original_message, self.SEPARATOR
+        )
+
+        return filtered_message
+        NotImplementedError
