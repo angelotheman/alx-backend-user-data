@@ -1,2 +1,9 @@
-# alx-backend-user-data
-Working with backend user data for profiling
+## Description
+Dealing with user profiling and extracting user data
+
+## Concepts
+- Personal Information
+- Data Protection Laws
+
+
+### Happy Coding 🚀
