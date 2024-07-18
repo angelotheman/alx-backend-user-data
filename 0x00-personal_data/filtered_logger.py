@@ -6,7 +6,6 @@ from os import getenv
 import re
 import logging
 import mysql.connector
-from mysql.connector.connection import MySQLConnection
 from typing import List, Optional
 
 
@@ -83,7 +82,7 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> Optional[MySQLConnection]:
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """
     Returns a MySQL database connection
     """
