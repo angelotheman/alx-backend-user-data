@@ -19,7 +19,7 @@ def filter_datum(
 
     combined_pattern = '|'.join(patterns)
 
-    def substitue(match):
+    def substitute(match):
         """
         Helper function to get the substitue match
         """
