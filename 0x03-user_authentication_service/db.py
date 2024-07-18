@@ -4,6 +4,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.session import Session
 
 from user import Base, User
@@ -42,3 +44,19 @@ class DB:
             self._session.rollback()
             new_user = None
         return new_user
+
+    def find_user_by(self, **kwargs) -> User:
+        """
+        Returns the first instance of a user object
+        """
+        try:
+            result = self._session.query(user).filter_by(**kwargs).first()
+
+            if result:
+                return result
+            else:
+                raise NoResultFound()
+        except NoResultFound as e:
+            raise e
+        except InvalidRequestError as e:
+            raise e
