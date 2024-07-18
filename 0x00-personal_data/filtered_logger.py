@@ -2,8 +2,10 @@
 """
 Module to demonstrate user data and logging
 """
+from os import getenv
 import re
 import logging
+import mysql.connector
 from typing import List
 
 
@@ -78,3 +80,20 @@ def get_logger() -> logging.Logger:
 
     logger.addHandler(stream_handler)
     return logger
+
+
+def get_db():
+    """
+    Returns a MySQL database connection
+    """
+    username = getenv("PERSONAL_DATA_DB_USERNAME", "root")
+    password = getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    host = getenv("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = getenv("PERSONAL_DATA_DB_NAME")
+
+    return mysql.connector.connect(
+            host=host,
+            user=username,
+            password=password,
+            database=db_name
+    )
