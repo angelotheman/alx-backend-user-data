@@ -50,7 +50,7 @@ class DB:
         Returns the first instance of a user object
         """
         try:
-            result = self._session.query(user).filter_by(**kwargs).first()
+            result = self._session.query(User).filter_by(**kwargs).first()
 
             if result:
                 return result
