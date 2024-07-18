@@ -97,3 +97,32 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
             password=password,
             database=db_name
     )
+
+
+def main():
+    """
+    Main function to handle functionality
+    """
+    logger = get_logger()
+    db = get_db()
+
+    if db is None:
+        return
+
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM users")
+    rows = cursor.fetchall()
+
+    for row in rows:
+        filtered_data = filter_datum(
+                PII_FIELDS, RedactingFormatter.REDACTION,
+                str(row), RedactingFormatter.SEPARATOR
+        )
+        logger.info(filtered_data)
+
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
