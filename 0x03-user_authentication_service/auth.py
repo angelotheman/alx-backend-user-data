@@ -3,6 +3,7 @@
 Authenticating the database
 """
 import bcrypt
+import uuid
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
@@ -36,6 +37,12 @@ class Auth:
             return _check_password(password, user.hashed_password)
         except NoResultFound:
             return False
+
+    def _generate_uuid(self) -> str:
+        """
+        Generates a uniq ID for the instance
+        """
+        return str(uuid.uuid4())
 
 
 def _hash_password(password: str) -> bytes:
