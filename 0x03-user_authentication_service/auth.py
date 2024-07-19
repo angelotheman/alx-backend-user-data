@@ -39,18 +39,12 @@ class Auth:
         except NoResultFound:
             return False
 
-    def _generate_uuid(self) -> str:
-        """
-        Generates a uniq ID for the instance
-        """
-        return str(uuid.uuid4())
-
     def create_session(self, email: str) -> str:
         """
         Creates session with unique ID
         """
         user = self._db.find_user_by(email=email)
-        session_id = self._generate_uuid()
+        session_id = _generate_uuid()
         self._db.update_user(user.id, session_id=session_id)
         return session_id
 
@@ -62,9 +56,12 @@ class Auth:
         if session_id is None:
             return None
 
-        user = self._db.find_user_by(session_id=session_id)
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+        except NoResultFound:
+            return None
 
-        return user if user else None
+        return user
 
 
 def _hash_password(password: str) -> bytes:
@@ -82,3 +79,10 @@ def _check_password(password: str, hashed_password: bytes) -> bool:
             password.encode('utf-8'),
             hashed_password
     )
+
+
+def _generate_uuid(self) -> str:
+    """
+    Generates a uniq ID for the instance
+    """
+    return str(uuid.uuid4())
