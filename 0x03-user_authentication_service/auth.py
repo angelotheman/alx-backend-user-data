@@ -7,7 +7,7 @@ import uuid
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
-from typing import Optional
+from typing import Union
 
 
 class Auth:
@@ -49,7 +49,7 @@ class Auth:
         return session_id
 
     def get_user_from_session_id(
-            self, session_id: Optional[str]) -> Optional[User]:
+            self, session_id: str) -> Union[User, None]:
         """
         Gets the user from session or none
         """
