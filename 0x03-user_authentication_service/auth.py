@@ -90,9 +90,9 @@ class Auth:
         """
         Finally updates the password according to the token
         """
-        try:
-            user = self.get_user_from_session(reset_token)
-        except NoResultFound:
+        user = self.get_user_from_session(reset_token)
+
+        if not user:
             raise ValueError("User does not exist")
 
         hashed_password = _hash_password(password)
