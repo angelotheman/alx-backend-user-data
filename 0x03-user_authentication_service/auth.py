@@ -7,7 +7,7 @@ import uuid
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
-from typing import Union
+from typing import Union, Optional
 
 
 class Auth:
@@ -49,7 +49,7 @@ class Auth:
         return session_id
 
     def get_user_from_session_id(
-            self, session_id: str) -> Union[User, None]:
+            self, session_id: Optional[str]) -> Optional[User]:
         """
         Gets the user from session or none
         """
@@ -81,7 +81,7 @@ def _check_password(password: str, hashed_password: bytes) -> bool:
     )
 
 
-def _generate_uuid(self) -> str:
+def _generate_uuid() -> str:
     """
     Generates a uniq ID for the instance
     """
