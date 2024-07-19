@@ -10,7 +10,7 @@ AUTH = Auth()
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET'], strict_slashes=False)
 def index():
     """
     Fist route
@@ -20,7 +20,7 @@ def index():
     })
 
 
-@app.route('/users', methods=['POST'])
+@app.route('/users', methods=['POST'], strict_slashes=False)
 def users() -> Response:
     """
     Add users
@@ -40,7 +40,7 @@ def users() -> Response:
         }), 400
 
 
-@app.route('/sessions', methods=['POST'])
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
 def login() -> Response:
     """
     Login Users
@@ -63,7 +63,7 @@ def login() -> Response:
     return response
 
 
-@app.route('/sessions', methods=['DELETE'])
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout() -> Response:
     """
     Log users out
@@ -81,6 +81,24 @@ def logout() -> Response:
     AUTH.destroy_session(user.id)
 
     return redirect("/")
+
+
+@app.route('/profile', methods=['GET'], strict_slashes=False)
+def profile() -> Response:
+    """
+    Get the user
+    """
+    session_id = request.cookies.get('session_id')
+
+    if not session_id:
+        abort(403)
+
+    user = AUTH.get_user_from_session_id(session_id)
+
+    if user is None:
+        abort(403)
+
+    return jsonify({"email": user.email}), 200
 
 
 if __name__ == "__main__":
