@@ -82,8 +82,8 @@ class Auth:
             reset_token = _generate_uuid()
             self._db.update(user.id, reset_token=reset_token)
             return reset_token
-        except ValueError as e:
-            raise e
+        except NoResultFound:
+            raise ValueError
 
 
 def _hash_password(password: str) -> bytes:
