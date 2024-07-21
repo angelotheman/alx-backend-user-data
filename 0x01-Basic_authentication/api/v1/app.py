@@ -56,13 +56,13 @@ def before_request() -> str:
             '/api/v1/forbidden/'
     ]
 
-    if auth.require_auth(request.path, excluded_paths):
+    if not auth.require_auth(request.path, excluded_paths):
         return
 
-    if not auth.authorization_header(request):
+    if auth.authorization_header(request) is None:
         abort(401)
 
-    if not auth.current_user(request):
+    if auth.current_user(request) is None:
         abort(403)
 
 
