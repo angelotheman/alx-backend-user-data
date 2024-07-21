@@ -4,11 +4,8 @@ Authentication module for the application
 """
 import re
 from flask import request
-<<<<<<< HEAD
 from typing import List, TypeVar
-=======
 from typing import List
->>>>>>> 563980cd369ec9abde7186b6ac24d0415b9de2e9
 
 
 class Auth:
