@@ -16,13 +16,31 @@ class Auth:
         """
         Looks for the required paths
         """
-        return False
+        if path is None:
+            return True
+        if len(excluded_paths) == 0 or excluded_paths is None:
+            return True
+
+        normalized_path = path.rstrip('/')
+
+        for excluded in excluded_paths:
+            normalized_excluded = excluded.rstrip('/')
+            if normalized_excluded == normalized_path:
+                return False
+
+        return True
 
     def authorization_header(self, request=None) -> str:
         """
         Authorization header function
         """
-        return None
+        if request is None:
+            return None
+
+        if "Authorization" not in request.keys():
+            return None
+
+        return request["Authorization"]
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
