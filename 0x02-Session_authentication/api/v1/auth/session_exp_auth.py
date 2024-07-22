@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+"""
+Module for session expiration
+"""
 from datetime import datetime, timedelta
 import os
 from .session_auth import SessionAuth
