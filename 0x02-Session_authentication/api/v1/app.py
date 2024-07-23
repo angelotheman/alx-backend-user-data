@@ -26,8 +26,11 @@ if auth_type == 'session_auth':
     from api.v1.auth.session_auth import SessionAuth
     auth = SessionAuth()
 if auth_type == 'session_exp_auth':
-    form api.v1.auth.session_exp_auth import SessionExpAuth
+    from api.v1.auth.session_exp_auth import SessionExpAuth
     auth = SessionExpAuth()
+if auth_type == 'session_db_auth':
+    from api.v1.auth.session_db_auth import SessionDbAuth
+    auth = SessionDbAuth
 
 
 @app.errorhandler(404)
